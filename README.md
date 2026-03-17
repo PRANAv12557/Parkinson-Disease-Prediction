@@ -2,188 +2,66 @@
 
 [![forthebadge made-with-python](http://ForTheBadge.com/images/badges/made-with-python.svg)](https://www.python.org/)<br><br>
 
-Parkinson's disease (PD) is a neurodegenerative disorder that affects movement control. This project leverages **machine learning** techniques to predict the likelihood of an individual having Parkinson's disease based on their medical features. The model is trained on a dataset containing medical records, and a **Streamlit app** provides a user-friendly interface to interact with the prediction model. 🧬✨
+Parkinson's disease (PD) is a neurodegenerative disorder that affects movement control. This project leverages **machine learning** techniques to predict the likelihood of an individual having Parkinson's disease based on their medical features. 
 
-## Deployed Web Application 🌐
+We have heavily improved and expanded upon a base machine learning model by constructing a **Premium Streamlit web application** that offers **fully automated acoustic feature extraction**, batch processing capabilities, and a sleek, modern user interface. ✨
 
-🔗 [Parkinson's Disease Prediction](https://parkinsons-prediction-app-the-amazing-atharva.streamlit.app/)
+## 🌟 Key Improvements & New Features
 
-### About This App 🖥️
+We have transformed this project from a standard ML script into a clinical-grade application by adding the following major advancements:
 
-This application uses a **machine learning model** to predict whether an individual has Parkinson's disease based on various vocal feature inputs. 🎤🔊 The app allows users to interactively input medical data and receive a prediction.
+1. **🎤 Automated Audio Feature Extraction**
+   - Users no longer need to manually enter 22 complex acoustic features.
+   - Built an integration with `praat-parselmouth` to automatically extract all necessary features (Jitter, Shimmer, HNR, APQ, etc.) directly from a `.wav` voice recording in seconds.
+   - Completely automates the prediction pipeline.
 
-### About This Repository 📂
+2. **📊 Batch CSV Processing**
+   - Added a dedicated pipeline for hospitals and researchers to upload a CSV dataset containing multiple patient records.
+   - The system instantly runs predictions on the entire batch and generates a downloadable CSV report with the results.
 
-This repository contains:
-- A trained **machine learning model** for predicting Parkinson's disease.
-- A **Streamlit app** that provides an interactive interface for predictions.
+3. **📄 Single Patient Report Auto-Fill**
+   - Enhanced the manual input tab to allow uploading a single patient's clinical CSV report.
+   - Automatically parses the file and auto-fills the 22 manual input boxes, allowing doctors to do a visual review or "What-If" analysis before running the diagnostics.
+
+4. **🎨 Premium UI/UX Redesign**
+   - Completely overhauled the frontend using custom CSS and Streamlit components.
+   - Introduced dynamic Plotly graphs for Feature Importance Visualization, showing exactly *why* the model made its prediction.
+   - Designed a clean, professional dashboard with statistical cards, a dedicated educational Home Page, and an interactive FAQ section.
 
 ---
 
 ## Project Structure 🛠️
 
-The project is organized into different components, including model training, data processing, and the Streamlit web app. Here’s the directory structure:
+The project is organized into different components, including model training, audio processing, and the Streamlit web app:
 
-
-```
-├── model_files/           # Folder containing model files and other relevant files
-│   ├── parkinson_model.pkl  # Saved trained model in pickle format
-│   ├── parkinson_model.sav  # Another format of the trained model
-│   ├── pca.pkl             # Principal Component Analysis (PCA) model
-│   ├── scaler.pkl         # StandardScaler model used during training
+```text
+├── model_files/           # Folder containing model files
+│   ├── parkinson_model.pkl  # Saved SVM model in pickle format
+│   ├── pca.pkl              # Principal Component Analysis (PCA) model
+│   ├── scaler.pkl           # StandardScaler model
 |
 ├── data/                  # Folder for dataset and related files
-│   └── parkinsons.data     # Dataset used for model training
+│   └── parkinsons.data    # Original Dataset
+│   └── CSV Files/         # Sample single-patient reports for testing
 |
+├── app8.py                # Main enhanced Streamlit application
+├── audio_processing.py    # Custom script for Praat automated feature extraction
 ├── requirements.txt       # Python dependencies required to run the project
-└── oldrequirements1.txt   # Old version of requirements file (if needed)
-|
-├── app8.py                # Streamlit app for interactive prediction
-├── dv_cp_.py              # Helper functions and data preprocessing code
-|
-| etc...
 ```
-## Machine Learning Models Trained & Evaluated 🧑‍💻
-The following Machine Learning models were trained and evaluated: <br>
+
+## Machine Learning Models Trained & Evaluated 🧑💻
+
+The following Machine Learning models were evaluated on the dataset: <br>
 1️⃣ Logistic Regression <br>
 2️⃣ Random Forest Classifier <br>
 3️⃣ Decision Tree Classifier <br>
-4️⃣ Support Vector Machine Classifier <br>
+4️⃣ Support Vector Machine Classifier (SVM - **Selected**) <br>
 5️⃣ Naive Bayes Classifier <br>
 6️⃣ K Nearest Neighbor Classifier <br>
 
-## Parkinson's Disease Data Set Description 📊
+*(Model evaluation metrics led to the selection of SVM coupled with PCA and Standard Scaling for maximum clinical accuracy).*
 
-<table>
-  <tr>
-    <th><b>Data Set Characteristics</b></th>
-    <th><b>Multivariate</b></th>
-  </tr>
-  <tr>
-    <td>Number of Instances</td> 
-    <td>197</td>
-  </tr>
-  <tr>
-    <td>Area</td>
-    <td>Life</td>
-  </tr>
-  <tr>
-    <td>Attribute Characteristics</td>
-    <td>Real</td>
-  </tr>
-  <tr>
-    <td>Number of Attributes</td>
-    <td>23</td>
-  </tr>
-  <tr>
-    <td>Date Donated</td>
-    <td>2008-06-26</td>
-  </tr>
-  <tr>
-    <td>Associated Task</td>
-    <td>Classification</td>
-  </tr>
-  <tr>
-    <td>Missing Values?</td>
-    <td>N/A</td>
-  </tr>
-</table>
-
-<h1>Attribute Information</h1>
-
-## Medical Attribute Information 📋
-<table>
-  <tr>
-    <th><b>Attribute</b></th>
-    <th><b>Meaning</b></th>
-  </tr>
-  <tr>
-    <td>name</td> 
-    <td>ASCII subject name and recording number</td>
-  </tr>
-  <tr>
-    <td>MDVP:Fo(Hz)</td> 
-    <td>Average vocal fundamental frequency</td>
-  </tr>
-  <tr>
-    <td>MDVP:Fhi(Hz)</td> 
-    <td>Maximum vocal fundamental frequency</td>
-  </tr>
-  <tr>
-    <td>MDVP:Flo(Hz)</td>
-    <td>Minimum vocal fundamental frequency</td>
-  </tr>
-  <tr>
-    <td>MDVP:Jitter(%)</td>
-    <td>Measure of variation in fundamental frequency</td>
-  <tr>
-    <td>MDVP:Jitter(Abs)</td>
-    <td>Measure of variation in fundamental frequency</td>
-  <tr>
-    <td>MDVP:RAP</td>
-    <td>Measure of variation in fundamental frequency</td>
-  <tr>
-    <td>MDVP:PPQ</td>
-    <td>Measure of variation in fundamental frequency</td>
-  <tr>
-    <td>Jitter:DDP</td> 
-    <td>Measure of variation in fundamental frequency</td>
-  </tr>
-  <tr>
-    <td>MDVP:Shimmer</td>
-    <td>Measure of variation in amplitude</td>
-  <tr>
-    <td>MDVP:Shimmer(dB)</td>
-    <td>Measure of variation in amplitude</td>
-  <tr>
-    <td>Shimmer:APQ3</td>
-    <td>Measure of variation in amplitude</td>
-  <tr>
-    <td>Shimmer:APQ5</td>
-    <td>Measure of variation in amplitude</td>
-  <tr>
-    <td>MDVP:APQ</td>
-    <td>Measure of variation in amplitude</td>
-  <tr>
-    <td>Shimmer:DDA</td>
-    <td>Measure of variation in amplitude</td>
-  </tr>
-  <tr>
-    <td>NHR</td>
-    <td>Measure of ratio of noise to tonal components in the voice</td>
-  <tr>
-    <td>HNR</td> 
-    <td>Measure of ratio of noise to tonal components in the voice</td>
-  </tr>
-  <tr>
-    <td>status(Target variable)</td> 
-    <td>Health status of the subject (one) - Parkinson's, (zero) - healthy</td>
-  </tr>
-  <tr>
-    <td>RPDE</td>
-    <td>Non-linear dynamical complexity measure</td>
-  <tr>
-    <td>D2</td> 
-    <td>Non-linear dynamical complexity measure</td>
-  </tr>
-  <tr>
-    <td>DFA</td> 
-    <td>Signal fractal scaling exponent</td>
-  </tr>
-  <tr>
-    <td>spread1</td>
-    <td>Non-linear measure of fundamental frequency variation</td>
-  <tr>
-    <td>spread2</td>
-    <td>Non-linear measure of fundamental frequency variation</td>
-  <tr>
-    <td>PPE</td>
-    <td>Non-linear measure of fundamental frequency variation</td>
-  </tr>
-</table>
-
-
-## Installation 🛠️
+## Installation & Setup 🛠️
 
 ### 1. Clone the repository
 
@@ -192,13 +70,19 @@ git clone https://github.com/your-username/parkinson-disease-prediction.git
 cd parkinson-disease-prediction
 ```
 
-### 2. Set up a virtual environment (optional but recommended)
+### 2. Set up a virtual environment (Recommended)
 
-#### Using `venv`:
+#### Using `venv` (Windows):
 
 ```bash
 python -m venv venv
-source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
+.\venv\Scripts\activate
+```
+
+#### Using `venv` (Mac/Linux):
+```bash
+python3 -m venv venv
+source venv/bin/activate
 ```
 
 ### 3. Install dependencies
@@ -206,69 +90,45 @@ source venv/bin/activate   # On Windows, use `venv\Scripts\activate`
 ```bash
 pip install -r requirements.txt
 ```
-
-## Model Training 🔬
-
-The model has been trained using a dataset of medical features of individuals, which can be found in the file `parkinsons.data`. The training process involves the following steps:
-
-1. **Preprocessing**: Data cleaning, handling missing values, and scaling features.
-2. **Model Selection**: An appropriate machine learning model is trained on the data.
-3. **PCA Transformation**: Principal Component Analysis (PCA) is applied to reduce dimensionality.
-4. **Model Saving**: The final trained model and other relevant artifacts like scaler and PCA are saved as pickle files (`.pkl`, `.sav`).
-
-You can use these pre-trained models to predict Parkinson's disease on new data by using the Streamlit app.
+*(Ensure `praat-parselmouth` and `plotly` install correctly for the advanced features to function).*
 
 ## Using the Streamlit App 🚀
 
-To interact with the trained model and make predictions, we have built a simple Streamlit web app.
-
-### Running the app
+To interact with the enhanced web app:
 
 1. Navigate to the project directory.
-2. Run the following command:
+2. Run the application:
 
    ```bash
    streamlit run app8.py
    ```
 
-3. A web browser will automatically open the app, or you can access it at `http://localhost:8501` in your browser.
+3. Your browser will automatically open to `http://localhost:8501`.
 
-### Features of the Streamlit App
-
-- Input medical features related to the patient.
-- Predict if the individual is likely to have Parkinson's disease.
-- Visualize the prediction result with features importance.
-
-## Files 📁
-
-- `parkinson_model.pkl`: The trained machine learning model saved using `pickle`.
-- `parkinson_model.sav`: An alternate format of the trained model.
-- `pca.pkl`: Principal Component Analysis model for dimensionality reduction.
-- `scaler.pkl`: Scaler model used to normalize input data before feeding it into the model.
-
-## Contributing 🤝
-
-We welcome contributions to improve the project! If you'd like to contribute, feel free to:
-
-1. Fork the repository.
-2. Create a new branch for your changes.
-3. Submit a pull request.
+### Core Application Capabilities
+- **Audio Tab:** Upload a `.wav` file of a sustained "Ahhhh" vowel sound for instant, frictionless prediction.
+- **Batch Tab:** Upload a CSV of multiple patients to receive a downloadable prediction report.
+- **Manual Tab:** Upload a single-patient CSV report to auto-fill the form, tweak variables, and run diagnostics.
 
 ## Acknowledgements 🙏
 
-- Dataset: [Parkinson's Disease Dataset](https://archive.ics.uci.edu/ml/datasets/parkinsons)
-- Libraries used: `scikit-learn`, `streamlit`, `pandas`, and `matplotlib`.
-- Special thanks to **Streamlit Cloud**
+- Dataset Provider: [UCI Machine Learning Repository - Parkinson's Disease Dataset](https://archive.ics.uci.edu/ml/datasets/parkinsons)
+- Foundational audio processing logic utilizing [Parselmouth](https://parselmouth.readthedocs.io/).
+- Built using `streamlit`, `scikit-learn`, `pandas`, and `plotly`.
 
-## Group Details 👩‍💻👨‍💻
+## Group Details 👩💻👨💻
 
-This project was developed by a group of 4 students from **VIT Pune**, under the **CSAI-B** branch.
+This project was developed and majorly enhanced by a group of 4 students from **VIT Pune**, under the **CSAI-B** branch.
 
 | **Roll Number** | **Official Name**              |
 |-----------------|--------------------------------|
 | 33              | Shrey Santosh Rupnavar         |
 | 37              | Salitri Atharva Akhil          |
 | 60              | Tanishq Sudhir Thuse           |
+| 61              | Tripti Prakash Mirani          |
+
+---
+#### If you have any questions or suggestions, feel free to open an issue or reach out directly! 😄👋ishq Sudhir Thuse           |
 | 61              | Tripti Prakash Mirani          |
 
 
