@@ -1,0 +1,13 @@
+imbalanced-learn
+matplotlib
+numpy
+pandas
+Pillow
+plotly
+scikit-learn
+seaborn
+streamlit
+praat-parselmouth
+librosa
+soundfile
+nolds
